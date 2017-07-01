@@ -4,8 +4,8 @@ from gui import ClientInterface
 
 def main():
     app = QtGui.QApplication(sys.argv)
-    guiObj = GUI()
-    guiObj.launch()
+    client_app = ClientInterface()
+    client_app.launch()
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
