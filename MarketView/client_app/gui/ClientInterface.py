@@ -4,7 +4,7 @@ from datetime import datetime
 from MarketView.client_app.utilities import NPD_DataSet
 
 
-class ClientInterface(QtGui.QMainWindow):
+class ClientInterface(QtGui.QWidget):
 
     # Initialize the client interface
     def __init__(self):
@@ -12,8 +12,12 @@ class ClientInterface(QtGui.QMainWindow):
 
         # ui layout
         self.main_layout = QtGui.QGridLayout()
-        self.menu_layout = QtGui.QHBoxLayout()
+        # menu_bar
         self.menu_bar = QtGui.QMenuBar(self)
+        self.menu_bar.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        # web_app
+        self.web_app = QtWebKit.QWebView(self)
+        self.web_app.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
 
         # init filename
         self.file_name = None
@@ -22,6 +26,7 @@ class ClientInterface(QtGui.QMainWindow):
     # launches the client interface
     def launch(self):
         self.init_menu()
+        self.init_web_view()
         self.setLayout(self.main_layout)
         self.setGeometry(300, 300, 1000, 700)
         self.setWindowTitle(" Market View ")
@@ -42,8 +47,12 @@ class ClientInterface(QtGui.QMainWindow):
         file_menu.addAction(exit_action)
 
         # set menu into layout
-        self.menu_layout.addWidget(self.menu_bar)
-        self.main_layout.addLayout(self.menu_layout, 0, 0)
+        self.main_layout.addWidget(self.menu_bar, 0, 0)
+
+    def init_web_view(self):
+        # Launch Website
+        self.web_app.setUrl("http://localhost:8000/marketview/")
+        self.main_layout.addWidget(self.web_app, 1, 0)
 
     # opens a new file
     def open_file(self):

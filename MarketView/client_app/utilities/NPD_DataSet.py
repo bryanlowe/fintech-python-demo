@@ -1,8 +1,10 @@
+import datetime as dt
 import pyexcel as pe
 from . import DataSet
 
 
 class NPD_DataSet(DataSet):
+
 
     def __init__(self, dataset):
         super(NPD_DataSet, self).__init__(dataset)
@@ -11,6 +13,7 @@ class NPD_DataSet(DataSet):
         self.unit_data = {}
         self.revenue_data = {}
         self.date_range_data = []
+        self.MONTHS = {'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 5, 'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12}
 
     # sets the data file to be parsed
     def set_data_file(self, data_file):
@@ -68,6 +71,7 @@ class NPD_DataSet(DataSet):
         result['month_end'] = result['week_end'].split(' ')[0] + ' ' + result['week_end'].split(' ')[2]
         result['year_start'] = result['month_start'].split(' ')[1]
         result['year_end'] = result['month_end'].split(' ')[1]
+        result['iso_date'] = dt.datetime(int(result['year_start']), self.MONTHS[result['week_start'].split(' ')[0]], int(result['week_start'].split(' ')[1]), 0, 0, 0)
         return result
 
     # parse the unit and revenue data into a dict
